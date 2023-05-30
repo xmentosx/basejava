@@ -4,8 +4,8 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    Resume[] storage = new Resume[10000];
-    int size = 0;
+    private final Resume[] storage = new Resume[10000];
+    private int size = 0;
 
     void clear() {
         for (int i = 0; i < size; i++) {
@@ -23,29 +23,24 @@ public class ArrayStorage {
     }
 
     Resume get(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (storage[i].uuid.equals(uuid)) {
-                return storage[i];
-            }
+        int position = findResumePosition(uuid);
+        if (position == -1) {
+            System.out.println("Невозможно получить резюме: Резюме не найдено в хранилище.");
+            return null;
         }
-        System.out.println("Невозможно получить резюме: Резюме не найдено в хранилище.");
-        return null;
+        return storage[position];
     }
 
     void delete(String uuid) {
-        boolean resumeFound = false;
-        for (int i = 0; i < size; i++) {
-            if (resumeFound) {
-                storage[i - 1] = storage[i];
-            } else if (storage[i].uuid.equals(uuid)) {
-                resumeFound = true;
-            }
-        }
-        if (resumeFound) {
-            storage[size--] = null;
-        } else {
+        int position = findResumePosition(uuid);
+        if (position == -1) {
             System.out.println("Невозможно удалить резюме: Резюме не найдено в хранилище.");
+            return;
         }
+        for (int i = position + 1; i < size; i++) {
+            storage[i - 1] = storage[i];
+        }
+        storage[--size] = null;
     }
 
     /**
@@ -57,5 +52,14 @@ public class ArrayStorage {
 
     int size() {
         return size;
+    }
+
+    private int findResumePosition(String uuid) {
+        for (int i = 0; i < size; i++) {
+            if (storage[i].uuid.equals(uuid)) {
+                return i;
+            }
+        }
+        return -1;
     }
 }
