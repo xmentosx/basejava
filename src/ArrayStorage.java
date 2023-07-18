@@ -5,7 +5,7 @@ import java.util.Arrays;
  */
 public class ArrayStorage {
     private final Resume[] storage = new Resume[10000];
-    private int size = 0;
+    private int size;
 
     void clear() {
         for (int i = 0; i < size; i++) {
@@ -15,7 +15,7 @@ public class ArrayStorage {
     }
 
     void save(Resume resume) {
-        if (storage.length == size) {
+        if (storage.length <= size) {
             System.out.println("Невозможно добавить резюме: Хранилище полностью заполнено.");
             return;
         }
@@ -23,21 +23,21 @@ public class ArrayStorage {
     }
 
     Resume get(String uuid) {
-        int position = findResumePosition(uuid);
-        if (position == -1) {
+        int resumeIndex = findResumeIndex(uuid);
+        if (resumeIndex == -1) {
             System.out.println("Невозможно получить резюме: Резюме не найдено в хранилище.");
             return null;
         }
-        return storage[position];
+        return storage[resumeIndex];
     }
 
     void delete(String uuid) {
-        int position = findResumePosition(uuid);
-        if (position == -1) {
+        int resumeIndex = findResumeIndex(uuid);
+        if (resumeIndex == -1) {
             System.out.println("Невозможно удалить резюме: Резюме не найдено в хранилище.");
             return;
         }
-        for (int i = position + 1; i < size; i++) {
+        for (int i = resumeIndex + 1; i < size; i++) {
             storage[i - 1] = storage[i];
         }
         storage[--size] = null;
@@ -54,7 +54,7 @@ public class ArrayStorage {
         return size;
     }
 
-    private int findResumePosition(String uuid) {
+    private int findResumeIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].uuid.equals(uuid)) {
                 return i;
