@@ -1,3 +1,7 @@
+package com.urise.webapp.storage;
+
+import com.urise.webapp.model.Resume;
+
 import java.util.Arrays;
 
 /**
@@ -7,14 +11,14 @@ public class ArrayStorage {
     private final Resume[] storage = new Resume[10000];
     private int size;
 
-    void clear() {
+    public void clear() {
         for (int i = 0; i < size; i++) {
             storage[i] = null;
         }
         size = 0;
     }
 
-    void save(Resume resume) {
+    public void save(Resume resume) {
         if (storage.length <= size) {
             System.out.println("Невозможно добавить резюме: Хранилище полностью заполнено.");
             return;
@@ -22,7 +26,7 @@ public class ArrayStorage {
         storage[size++] = resume;
     }
 
-    Resume get(String uuid) {
+    public Resume get(String uuid) {
         int resumeIndex = findResumeIndex(uuid);
         if (resumeIndex == -1) {
             System.out.println("Невозможно получить резюме: Резюме не найдено в хранилище.");
@@ -31,7 +35,7 @@ public class ArrayStorage {
         return storage[resumeIndex];
     }
 
-    void delete(String uuid) {
+    public void delete(String uuid) {
         int resumeIndex = findResumeIndex(uuid);
         if (resumeIndex == -1) {
             System.out.println("Невозможно удалить резюме: Резюме не найдено в хранилище.");
@@ -46,17 +50,17 @@ public class ArrayStorage {
     /**
      * @return array, contains only Resumes in storage (without null)
      */
-    Resume[] getAll() {
+    public Resume[] getAll() {
         return Arrays.copyOf(storage, size);
     }
 
-    int size() {
+    public int size() {
         return size;
     }
 
     private int findResumeIndex(String uuid) {
         for (int i = 0; i < size; i++) {
-            if (storage[i].uuid.equals(uuid)) {
+            if (storage[i].getUuid().equals(uuid)) {
                 return i;
             }
         }
