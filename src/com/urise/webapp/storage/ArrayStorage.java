@@ -1,7 +1,6 @@
 package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
-
 import java.util.Arrays;
 
 /**
@@ -12,15 +11,27 @@ public class ArrayStorage {
     private int size;
 
     public void clear() {
-        for (int i = 0; i < size; i++) {
-            storage[i] = null;
-        }
+        Arrays.fill(storage, 0, size - 1, null);
         size = 0;
+    }
+
+    public void update(Resume resume) {
+        int resumeIndex = findResumeIndex(resume.getUuid());
+        if (resumeIndex == -1) {
+            log("Невозможно обновить резюме \"" + resume.getUuid() + "\": Резюме не найдено в хранилище.");
+            return;
+        }
+        storage[resumeIndex] = resume;
     }
 
     public void save(Resume resume) {
         if (storage.length <= size) {
-            System.out.println("Невозможно добавить резюме: Хранилище полностью заполнено.");
+            log("Невозможно добавить резюме \"" + resume.getUuid() + "\": Хранилище полностью заполнено.");
+            return;
+        }
+        int resumeIndex = findResumeIndex(resume.getUuid());
+        if (resumeIndex != -1) {
+            log("Невозможно добавить резюме \"" + resume.getUuid() + "\": Резюме уже в хранилище.");
             return;
         }
         storage[size++] = resume;
@@ -29,7 +40,7 @@ public class ArrayStorage {
     public Resume get(String uuid) {
         int resumeIndex = findResumeIndex(uuid);
         if (resumeIndex == -1) {
-            System.out.println("Невозможно получить резюме: Резюме не найдено в хранилище.");
+            log("Невозможно получить резюме \"" + uuid + "\": Резюме не найдено в хранилище.");
             return null;
         }
         return storage[resumeIndex];
@@ -38,7 +49,7 @@ public class ArrayStorage {
     public void delete(String uuid) {
         int resumeIndex = findResumeIndex(uuid);
         if (resumeIndex == -1) {
-            System.out.println("Невозможно удалить резюме: Резюме не найдено в хранилище.");
+            log("Невозможно удалить резюме \"" + uuid + "\": Резюме не найдено в хранилище.");
             return;
         }
         for (int i = resumeIndex + 1; i < size; i++) {
@@ -65,5 +76,9 @@ public class ArrayStorage {
             }
         }
         return -1;
+    }
+
+    private void log(String message) {
+        System.out.println(message);
     }
 }
