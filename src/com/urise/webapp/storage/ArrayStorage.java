@@ -17,12 +17,12 @@ public class ArrayStorage {
     }
 
     public void update(Resume resume) {
-        int resumeIndex = findResumeIndex(resume.getUuid());
-        if (resumeIndex == -1) {
+        int index = findIndex(resume.getUuid());
+        if (index == -1) {
             log("Невозможно обновить резюме \"" + resume.getUuid() + "\": Резюме не найдено в хранилище.");
             return;
         }
-        storage[resumeIndex] = resume;
+        storage[index] = resume;
     }
 
     public void save(Resume resume) {
@@ -30,7 +30,7 @@ public class ArrayStorage {
             log("Невозможно добавить резюме \"" + resume.getUuid() + "\": Хранилище полностью заполнено.");
             return;
         }
-        int resumeIndex = findResumeIndex(resume.getUuid());
+        int resumeIndex = findIndex(resume.getUuid());
         if (resumeIndex != -1) {
             log("Невозможно добавить резюме \"" + resume.getUuid() + "\": Резюме уже в хранилище.");
             return;
@@ -39,21 +39,21 @@ public class ArrayStorage {
     }
 
     public Resume get(String uuid) {
-        int resumeIndex = findResumeIndex(uuid);
-        if (resumeIndex == -1) {
+        int index = findIndex(uuid);
+        if (index == -1) {
             log("Невозможно получить резюме \"" + uuid + "\": Резюме не найдено в хранилище.");
             return null;
         }
-        return storage[resumeIndex];
+        return storage[index];
     }
 
     public void delete(String uuid) {
-        int resumeIndex = findResumeIndex(uuid);
-        if (resumeIndex == -1) {
+        int index = findIndex(uuid);
+        if (index == -1) {
             log("Невозможно удалить резюме \"" + uuid + "\": Резюме не найдено в хранилище.");
             return;
         }
-        System.arraycopy(storage, resumeIndex + 1, storage, resumeIndex, size - resumeIndex);
+        System.arraycopy(storage, index + 1, storage, index, size - index);
         storage[--size] = null;
 
     }
@@ -69,7 +69,7 @@ public class ArrayStorage {
         return size;
     }
 
-    private int findResumeIndex(String uuid) {
+    private int findIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 return i;
