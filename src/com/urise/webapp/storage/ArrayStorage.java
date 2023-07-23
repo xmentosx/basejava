@@ -7,7 +7,8 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    private final Resume[] storage = new Resume[10000];
+    private static final int STORAGE_LIMIT = 10000;
+    private final Resume[] storage = new Resume[STORAGE_LIMIT];
     private int size;
 
     public void clear() {
@@ -52,10 +53,9 @@ public class ArrayStorage {
             log("Невозможно удалить резюме \"" + uuid + "\": Резюме не найдено в хранилище.");
             return;
         }
-        for (int i = resumeIndex + 1; i < size; i++) {
-            storage[i - 1] = storage[i];
-        }
+        System.arraycopy(storage, resumeIndex + 1, storage, resumeIndex, size - resumeIndex);
         storage[--size] = null;
+
     }
 
     /**
