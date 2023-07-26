@@ -6,18 +6,15 @@ import java.util.Arrays;
 /**
  * Array based storage for Resumes
  */
-public class ArrayStorage {
-    private static final int STORAGE_LIMIT = 10000;
-    private final Resume[] storage = new Resume[STORAGE_LIMIT];
-    private int size;
+public class ArrayStorage extends AbstractArrayStorage {
 
     public void clear() {
-        Arrays.fill(storage, 0, size - 1, null);
+        Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
     public void update(Resume resume) {
-        int index = findIndex(resume.getUuid());
+        int index = getIndex(resume.getUuid());
         if (index == -1) {
             log("Невозможно обновить резюме \"" + resume.getUuid() + "\": Резюме не найдено в хранилище.");
             return;
@@ -26,11 +23,11 @@ public class ArrayStorage {
     }
 
     public void save(Resume resume) {
-        if (storage.length <= size) {
+        if (size >= STORAGE_LIMIT) {
             log("Невозможно добавить резюме \"" + resume.getUuid() + "\": Хранилище полностью заполнено.");
             return;
         }
-        int resumeIndex = findIndex(resume.getUuid());
+        int resumeIndex = getIndex(resume.getUuid());
         if (resumeIndex != -1) {
             log("Невозможно добавить резюме \"" + resume.getUuid() + "\": Резюме уже в хранилище.");
             return;
@@ -38,17 +35,8 @@ public class ArrayStorage {
         storage[size++] = resume;
     }
 
-    public Resume get(String uuid) {
-        int index = findIndex(uuid);
-        if (index == -1) {
-            log("Невозможно получить резюме \"" + uuid + "\": Резюме не найдено в хранилище.");
-            return null;
-        }
-        return storage[index];
-    }
-
     public void delete(String uuid) {
-        int index = findIndex(uuid);
+        int index = getIndex(uuid);
         if (index == -1) {
             log("Невозможно удалить резюме \"" + uuid + "\": Резюме не найдено в хранилище.");
             return;
@@ -65,11 +53,7 @@ public class ArrayStorage {
         return Arrays.copyOf(storage, size);
     }
 
-    public int size() {
-        return size;
-    }
-
-    private int findIndex(String uuid) {
+    protected int getIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 return i;
@@ -78,7 +62,4 @@ public class ArrayStorage {
         return -1;
     }
 
-    private void log(String message) {
-        System.out.println(message);
-    }
 }
