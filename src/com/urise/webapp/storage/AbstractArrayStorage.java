@@ -10,14 +10,14 @@ import java.util.Arrays;
 public abstract class AbstractArrayStorage implements Storage {
     protected static final int STORAGE_LIMIT = 10000;
 
-    protected Resume[] storage = new Resume[STORAGE_LIMIT];
+    protected final Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
-    public int size() {
+    public final int size() {
         return size;
     }
 
-    public Resume get(String uuid) {
+    public final Resume get(String uuid) {
         int index = getIndex(uuid);
         if (index == -1) {
             log("Невозможно получить резюме \"" + uuid + "\": Резюме не найдено в хранилище.");
@@ -26,7 +26,7 @@ public abstract class AbstractArrayStorage implements Storage {
         return storage[index];
     }
 
-    public void update(Resume resume) {
+    public final void update(Resume resume) {
         int index = getIndex(resume.getUuid());
         if (index < 0) {
             log("Невозможно обновить резюме \"" + resume.getUuid() + "\": Резюме не найдено в хранилище.");
@@ -35,29 +35,29 @@ public abstract class AbstractArrayStorage implements Storage {
         storage[index] = resume;
     }
 
-    public void delete(String uuid) {
+    public final void delete(String uuid) {
         int index = getIndex(uuid);
         if (index == -1) {
             log("Невозможно удалить резюме \"" + uuid + "\": Резюме не найдено в хранилище.");
             return;
         }
-        deleteAfterCheck(uuid, index);
+        removeFromStorage(uuid, index);
     }
 
-    public void save(Resume resume) {
+    public final void save(Resume resume) {
         if (size >= STORAGE_LIMIT) {
             log("Невозможно добавить резюме \"" + resume.getUuid() + "\": Хранилище полностью заполнено.");
             return;
         }
-        int resumeIndex = getIndex(resume.getUuid());
-        if (resumeIndex >= 0) {
+        int receivedIndex = getIndex(resume.getUuid());
+        if (receivedIndex >= 0) {
             log("Невозможно добавить резюме \"" + resume.getUuid() + "\": Резюме уже в хранилище.");
             return;
         }
-        saveAfterCheck(resume);
+        saveToStorage(resume, receivedIndex);
     }
 
-    public void clear() {
+    public final void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
     }
@@ -65,17 +65,17 @@ public abstract class AbstractArrayStorage implements Storage {
     /**
      * @return array, contains only Resumes in storage (without null)
      */
-    public Resume[] getAll() {
+    public final Resume[] getAll() {
         return Arrays.copyOf(storage, size);
     }
 
     protected abstract int getIndex(String uuid);
 
-    protected abstract void saveAfterCheck(Resume resume);
+    protected abstract void saveToStorage(Resume resume, int receivedIndex);
 
-    protected abstract void deleteAfterCheck(String uuid, int index);
+    protected abstract void removeFromStorage(String uuid, int index);
 
-    protected void log(String message) {
+    protected final void log(String message) {
         System.out.println(message);
     }
 }
