@@ -15,6 +15,12 @@ public class SortedArrayStorage extends AbstractArrayStorage{
     }
 
     @Override
+    protected void deleteAfterCheck(String uuid, int index) {
+        System.arraycopy(storage, index + 1, storage, index, size - index);
+        storage[--size] = null;
+    }
+
+    @Override
     protected int getIndex(String uuid) {
         Resume searchKey = new Resume();
         searchKey.setUuid(uuid);

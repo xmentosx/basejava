@@ -41,10 +41,9 @@ public abstract class AbstractArrayStorage implements Storage {
             log("Невозможно удалить резюме \"" + uuid + "\": Резюме не найдено в хранилище.");
             return;
         }
-        System.arraycopy(storage, index + 1, storage, index, size - index);
-        storage[--size] = null;
-
+        deleteAfterCheck(uuid, index);
     }
+
     public void save(Resume resume) {
         if (size >= STORAGE_LIMIT) {
             log("Невозможно добавить резюме \"" + resume.getUuid() + "\": Хранилище полностью заполнено.");
@@ -73,6 +72,8 @@ public abstract class AbstractArrayStorage implements Storage {
     protected abstract int getIndex(String uuid);
 
     protected abstract void saveAfterCheck(Resume resume);
+
+    protected abstract void deleteAfterCheck(String uuid, int index);
 
     protected void log(String message) {
         System.out.println(message);
