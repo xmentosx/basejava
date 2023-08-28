@@ -2,12 +2,15 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
-import com.urise.webapp.exception.StorageException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.urise.webapp.model.Resume;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public abstract class AbstractStorageTest {
     protected final Storage storage;
@@ -74,7 +77,15 @@ public abstract class AbstractStorageTest {
     public void getAll() throws Exception {
         Resume[] actual = storage.getAll();
         Resume[] expected = new Resume[]{RESUME_1, RESUME_2, RESUME_3};
-        Assert.assertArrayEquals(expected, actual);
+        if (actual.length != expected.length) {
+            Assert.fail("Arrays are not equal");
+        }
+        Set<Resume> actualSet = new HashSet<>();
+        actualSet.addAll(Arrays.asList(actual));
+        if (!actualSet.containsAll(Arrays.asList(expected))){
+            Assert.fail("Arrays are not equal");
+        }
+
     }
 
     @Test

@@ -36,12 +36,15 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         }
     }
 
-    protected Resume getOnIndex(int index) {
-        return storage[index];
+    protected Resume doGet(Object searchKey) {
+        return storage[(Integer) searchKey];
     }
 
-    protected void saveToIndex(Resume resume, int index) {
-        storage[index] = resume;
+    protected void doUpdate(Resume resume, Object searchKey) {
+        storage[(Integer) searchKey] = resume;
     }
 
+    protected boolean isExist(Object searchKey) {
+        return (Integer) searchKey >= 0;
+    }
 }
