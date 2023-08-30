@@ -5,7 +5,4 @@ public class ListStorageTest extends AbstractStorageTest {
         super(new ListStorage());
     }
 
-    @Override
-    protected void assertSize(int size) {
-    }
 }

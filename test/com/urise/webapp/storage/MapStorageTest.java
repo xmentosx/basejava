@@ -5,7 +5,4 @@ public class MapStorageTest extends AbstractStorageTest {
         super(new MapStorage());
     }
 
-    @Override
-    protected void assertSize(int size) {
-    }
 }
