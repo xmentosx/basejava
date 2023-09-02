@@ -18,14 +18,14 @@ public class MainArray {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         Resume r;
         while (true) {
-            System.out.print("Введите одну из команд - (list | save uuid | delete uuid | get uuid | update uuid | clear | exit): ");
+            System.out.print("Введите одну из команд - (list | save uuid full name | delete uuid | get uuid | update uuid full name | clear | exit): ");
             String[] params = reader.readLine().trim().toLowerCase().split(" ");
-            if (params.length < 1 || params.length > 2) {
+            if (params.length < 1) {
                 System.out.println("Неверная команда.");
                 continue;
             }
             String uuid = null;
-            if (params.length == 2) {
+            if (params.length >= 2) {
                 uuid = params[1].intern();
             }
             switch (params[0]) {
@@ -36,12 +36,12 @@ public class MainArray {
                     System.out.println(ARRAY_STORAGE.size());
                     break;
                 case "save":
-                    r = new Resume(uuid);
+                    r = new Resume(uuid, getFullName(params));
                     ARRAY_STORAGE.save(r);
                     printAll();
                     break;
                 case "update":
-                    r = new Resume(uuid);
+                    r = new Resume(uuid, getFullName(params));
                     ARRAY_STORAGE.update(r);
                     printAll();
                     break;
@@ -76,5 +76,14 @@ public class MainArray {
             }
         }
         System.out.println("----------------------------");
+    }
+
+    static String getFullName(String[] params) {
+        StringBuilder fullName = new StringBuilder();
+        for (int i = 2; i < params.length; i++) {
+            fullName.append(params[i]);
+            fullName.append(" ");
+        }
+        return fullName.toString().trim();
     }
 }

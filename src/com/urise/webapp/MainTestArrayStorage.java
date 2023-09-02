@@ -21,10 +21,10 @@ public class MainTestArrayStorage {
     static void test(Storage arrayStorage) {
         System.out.printf("Test for %s\n\n", arrayStorage.getClass().getName());
 
-        Resume r1 = new Resume("uuid1");
-        Resume r2 = new Resume("uuid2");
-        Resume r3 = new Resume("uuid3");
-        Resume r4 = new Resume("uuid4");
+        Resume r1 = new Resume("uuid1", "fullName1");
+        Resume r2 = new Resume("uuid2", "fullName2");
+        Resume r3 = new Resume("uuid3", "fullName3");
+        Resume r4 = new Resume("uuid4", "fullName4");
 
         arrayStorage.save(r3);
         arrayStorage.save(r2);
