@@ -25,6 +25,7 @@ public abstract class AbstractStorageTest {
     private static final String fullName_2 = "fullName2";
     private static final String fullName_3 = "fullName3";
     private static final String fullName_4 = "fullName4";
+    private static final String fullName_NOT_EXIST = "dummy";
 
     private static final Resume RESUME_1;
     private static final Resume RESUME_2;
@@ -76,7 +77,7 @@ public abstract class AbstractStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void updateNotExist() throws Exception {
-        Resume resume = new Resume(UUID_NOT_EXIST, "");
+        Resume resume = new Resume(UUID_NOT_EXIST, fullName_NOT_EXIST);
         storage.update(resume);
     }
 
