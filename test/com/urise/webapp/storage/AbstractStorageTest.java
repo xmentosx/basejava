@@ -63,7 +63,7 @@ public abstract class AbstractStorageTest {
     public void clear() throws Exception {
         storage.clear();
         assertSize(0);
-        Resume[] resumes = storage.getAll();
+        Resume[] resumes = storage.getAllSorted().toArray(new Resume[0]);
         Assert.assertArrayEquals(new Resume[0], resumes);
     }
 
@@ -82,7 +82,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void getAll() throws Exception {
-        Resume[] actual = storage.getAll();
+        Resume[] actual = storage.getAllSorted().toArray(new Resume[0]);
         Resume[] expected = new Resume[]{RESUME_1, RESUME_2, RESUME_3};
         if (actual.length != expected.length) {
             Assert.fail("Arrays are not equal");

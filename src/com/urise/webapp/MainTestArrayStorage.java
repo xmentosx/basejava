@@ -48,7 +48,7 @@ public class MainTestArrayStorage {
     }
     static void printAll(Storage arrayStorage) {
         System.out.println("\nGet All");
-        for (Resume r : arrayStorage.getAll()) {
+        for (Resume r : arrayStorage.getAllSorted().toArray(new Resume[0])) {
             System.out.println(r);
         }
     }
