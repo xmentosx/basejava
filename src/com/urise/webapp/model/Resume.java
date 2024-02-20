@@ -1,7 +1,6 @@
 package com.urise.webapp.model;
 
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Initial resume class
@@ -13,6 +12,10 @@ public class Resume {
 
     private final String fullName;
 
+    private final List<Contact> contacts = new ArrayList<>();
+
+    private final HashMap<SectionType, AbstractSection> sections = new HashMap<SectionType, AbstractSection>();
+
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
     }
@@ -23,6 +26,8 @@ public class Resume {
         this.uuid = uuid;
         this.fullName = fullName;
     }
+
+
 
     @Override
     public boolean equals(Object o) {

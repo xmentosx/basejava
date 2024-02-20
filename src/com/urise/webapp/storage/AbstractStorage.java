@@ -20,6 +20,7 @@ public abstract class AbstractStorage<SK> implements Storage {
         LOG.info("Delete " + uuid);
         SK searchKey = getExistingSearchKey(uuid);
         doDelete(uuid, searchKey);
+
     }
 
     public Resume get(String uuid) {

@@ -1,0 +1,97 @@
+@startuml
+class com.urise.webapp.model.ElementBulletsList {
+~ FormatedText text
+}
+class com.urise.webapp.model.Period {
+~ PeriodDate startDate
+~ PeriodDate endDate
+~ FormatedText title
+~ boolean hasText
+~ FormatedText text
+}
+class com.urise.webapp.model.SectionDescription {
+~ FormatedText text
+}
+class com.urise.webapp.model.PeriodsGroup {
+~ FormatedText title
+~ List<Period> periods
+}
+class com.urise.webapp.model.FormatedText {
+~ String text
+~ boolean hasLink
+~ String link
+~ boolean isBold
+}
+class com.urise.webapp.model.Resume {
+- String uuid
+- String fullName
+- List<Contact> contacts
+- HashMap<SectionType,AbstractSection> sections
++ boolean equals(Object)
++ int hashCode()
++ String toString()
++ int compareTo(Resume)
++ String getUuid()
++ String getFullName()
+}
+enum com.urise.webapp.model.SectionType {
++  PERSONAL
++  OBJECTIVE
++  ACHIEVEMENT
++  QUALIFICATIONS
++  EXPERIENCE
++  EDUCATION
+- String title
++ String getTitle()
+}
+class com.urise.webapp.model.AbstractSection {
+- SectionType type
+}
+class com.urise.webapp.model.Contact {
+- ContactType type
+- String value
++ ContactType getType()
++ String getValue()
++ String toString()
+}
+class com.urise.webapp.model.SectionBulletsList {
+~ List<ElementBulletsList> elements
+}
+class com.urise.webapp.model.PeriodDate {
+~ int year
+~ int month
+~ boolean isNow
+}
+enum com.urise.webapp.model.ContactType {
++  PHONE
++  MOBILE
++  HOME_PHONE
++  SKYPE
++  MAIL
++  LINKEDIN
++  GITHUB
++  STACKOVERFLOW
++  HOME_PAGE
+- String title
++ String getTitle()
+}
+class com.urise.webapp.model.SectionGrouppedPeriodsList {
+~ List<PeriodsGroup> periodsGroups
+}
+
+
+com.urise.webapp.model.AbstractSection <|-- com.urise.webapp.model.SectionDescription
+com.urise.webapp.model.AbstractSection <|-- com.urise.webapp.model.SectionBulletsList
+com.urise.webapp.model.AbstractSection <|-- com.urise.webapp.model.SectionGrouppedPeriodsList
+
+com.urise.webapp.model.Resume *-- com.urise.webapp.model.Contact
+com.urise.webapp.model.Resume *-- com.urise.webapp.model.AbstractSection
+com.urise.webapp.model.SectionBulletsList *-- com.urise.webapp.model.ElementBulletsList
+com.urise.webapp.model.SectionGrouppedPeriodsList *-- com.urise.webapp.model.PeriodsGroup
+com.urise.webapp.model.PeriodsGroup *-- com.urise.webapp.model.Period
+com.urise.webapp.model.Period --- com.urise.webapp.model.PeriodDate
+
+com.urise.webapp.model.Contact --- com.urise.webapp.model.ContactType
+
+com.urise.webapp.model.AbstractSection --- com.urise.webapp.model.SectionType
+@enduml

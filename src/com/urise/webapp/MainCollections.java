@@ -6,9 +6,13 @@ import java.util.*;
 
 public class MainCollections {
     private static final String UUID_1 = "uuid1";
+    private static final String UUID_2 = "uuid2";
+    private static final String UUID_5 = "uuid5";
+    private static final String UUID_6 = "uuid6";
+    private static final String UUID_7 = "uuid7";
     private static final Resume RESUME_1 = new Resume(UUID_1, "fullName1");
 
-    private static final String UUID_2 = "uuid2";
+
     private static final Resume RESUME_2 = new Resume(UUID_2, "fullName2");
 
     private static final String UUID_3 = "uuid3";
