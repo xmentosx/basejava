@@ -6,4 +6,8 @@ public class AbstractSection {
     public AbstractSection(SectionType type) {
         this.type = type;
     }
+
+    public SectionType getType() {
+        return type;
+    }
 }

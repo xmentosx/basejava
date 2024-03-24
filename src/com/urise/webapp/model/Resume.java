@@ -12,9 +12,9 @@ public class Resume {
 
     private final String fullName;
 
-    private final List<Contact> contacts = new ArrayList<>();
+    private final Map<ContactType, String> contacts = new EnumMap<ContactType, String>(ContactType.class);
 
-    private final HashMap<SectionType, AbstractSection> sections = new HashMap<SectionType, AbstractSection>();
+    private final Map<SectionType, AbstractSection> sections = new EnumMap<SectionType, AbstractSection>(SectionType.class);
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
@@ -26,8 +26,6 @@ public class Resume {
         this.uuid = uuid;
         this.fullName = fullName;
     }
-
-
 
     @Override
     public boolean equals(Object o) {
@@ -47,6 +45,12 @@ public class Resume {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(uuid).append("(").append(fullName).append(")");
+        for (Map.Entry<ContactType, String> entry : contacts.entrySet()) {
+            sb.append("\n").append(entry.getKey().getTitle()).append(": ").append(entry.getValue());
+        }
+        for (Map.Entry<SectionType, AbstractSection> entry : sections.entrySet()) {
+            sb.append("\n").append(entry.getKey().getTitle()).append(": ").append(entry.getValue());
+        }
         return sb.toString();
     }
 
@@ -62,5 +66,46 @@ public class Resume {
     public String getFullName() {
         return fullName;
     }
+
+    public Map<ContactType, String> getContacts() {
+        return contacts;
+    }
+
+    public Map<SectionType, AbstractSection> getSections() {
+        return sections;
+    }
+
+    public void addContact(ContactType type, String value) {
+        contacts.put(type, value);
+    }
+
+    public void addSection(SectionType type, AbstractSection section) {
+        sections.put(type, section);
+    }
+
+    public void removeContact(ContactType type) {
+        contacts.remove(type);
+    }
+
+    public void removeSection(SectionType type) {
+        sections.remove(type);
+    }
+
+    public AbstractSection getSection(SectionType type) {
+        return sections.get(type);
+    }
+
+    public String getContact(ContactType type) {
+        return contacts.get(type);
+    }
+
+    public void setContact(ContactType type, String value) {
+        contacts.put(type, value);
+    }
+
+    public void setSection(SectionType type, AbstractSection section) {
+        sections.put(type, section);
+    }
+
 
 }
