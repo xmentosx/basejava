@@ -25,15 +25,15 @@ public class Organization {
     private List<Period> periods;
 
     public Organization(String title, String website, List<Period> periods) {
+        Objects.requireNonNull(title, "title must not be null");
+        Objects.requireNonNull(periods, "periods must not be null");
         this.title = title;
         this.website = website;
         this.periods = periods;
     }
 
     public Organization(String title, String website, Period... periods) {
-        this.title = title;
-        this.website = website;
-        this.periods = Arrays.asList(periods);
+        this(title, website, Arrays.asList(periods));
     }
 
     public String getTitle() {

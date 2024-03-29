@@ -1,5 +1,7 @@
 package com.urise.webapp.model;
 
+import java.util.Objects;
+
 public enum ContactType {
     PHONE("Телефон"),
     MOBILE("Мобильный телефон"),
@@ -14,6 +16,7 @@ public enum ContactType {
     private final String title;
 
     ContactType(String title) {
+        Objects.requireNonNull(title, "title must not be null");
         this.title = title;
     }
 

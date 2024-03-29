@@ -1,5 +1,7 @@
 package com.urise.webapp.model;
 
+import java.util.Objects;
+
 public enum SectionType {
     PERSONAL("Личные качества"),
     OBJECTIVE("Позиция"),
@@ -11,6 +13,7 @@ public enum SectionType {
     private final String title;
 
     SectionType(String title) {
+        Objects.requireNonNull(title, "title must not be null");
         this.title = title;
     }
 

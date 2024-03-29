@@ -14,7 +14,7 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected void doDelete(String uuid, Integer searchKey) {
+    protected void doDelete(Integer searchKey) {
         storage[searchKey] = storage[size - 1];
         storage[size - 1] = null;
         size--;

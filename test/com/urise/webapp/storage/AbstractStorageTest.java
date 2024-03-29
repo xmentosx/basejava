@@ -12,6 +12,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.urise.webapp.ResumeTestData.getResume;
+
 public abstract class AbstractStorageTest {
     protected final Storage storage;
 
@@ -33,10 +35,10 @@ public abstract class AbstractStorageTest {
     private static final Resume RESUME_4;
 
     static {
-        RESUME_1 = new Resume(UUID_1, fullName_1);
-        RESUME_2 = new Resume(UUID_2, fullName_2);
-        RESUME_3 = new Resume(UUID_3, fullName_3);
-        RESUME_4 = new Resume(UUID_4, fullName_4);
+        RESUME_1 = getResume(UUID_1, fullName_1);
+        RESUME_2 = getResume(UUID_2, fullName_2);
+        RESUME_3 = getResume(UUID_3, fullName_3);
+        RESUME_4 = getResume(UUID_4, fullName_4);
     }
 
     public AbstractStorageTest(Storage storage) {
@@ -70,14 +72,14 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() throws Exception {
-        Resume resume = new Resume(UUID_1, fullName_1);
+        Resume resume = getResume(UUID_1, fullName_1);
         storage.update(resume);
         Assert.assertSame(resume, storage.get(UUID_1));
     }
 
     @Test(expected = NotExistStorageException.class)
     public void updateNotExist() throws Exception {
-        Resume resume = new Resume(UUID_NOT_EXIST, fullName_NOT_EXIST);
+        Resume resume = getResume(UUID_NOT_EXIST, fullName_NOT_EXIST);
         storage.update(resume);
     }
 

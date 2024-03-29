@@ -23,6 +23,9 @@ public class Period {
     }
 
     public Period(LocalDate start, LocalDate end, String title, String description) {
+        Objects.requireNonNull(start, "start must not be null");
+        Objects.requireNonNull(start, "end must not be null");
+        Objects.requireNonNull(start, "title must not be null");
         this.start = start;
         this.end = end;
         this.title = title;

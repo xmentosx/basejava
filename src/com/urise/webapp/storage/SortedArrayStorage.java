@@ -27,7 +27,7 @@ public class SortedArrayStorage extends AbstractArrayStorage{
     }
 
     @Override
-    protected void doDelete(String uuid, Integer searchKey) {
+    protected void doDelete(Integer searchKey) {
         int index = searchKey.intValue();
         System.arraycopy(storage, index + 1, storage, index, size - index);
         storage[--size] = null;
